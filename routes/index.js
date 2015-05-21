@@ -21,7 +21,6 @@ for (var name in configs.platforms) {
                         + "&nonce=" + req.query["nonce"]
                         + (req.query["echostr"] ? ("&echostr=" + req.query["echostr"]) : "");
                 request.get(url + search, function(error, response, body) {
-                	console.log(url+search);
                     res.send(body);
                 });
             }
@@ -37,12 +36,9 @@ for (var name in configs.platforms) {
                         length: req.headers['content-length'],
                         encoding: 'utf8'
                 }, function(err, buf) {
-                        request.post({
-                                url: url + search,
-                                formData: buf
-                        }, function(error, response, body) {
+                        request.post(url + search, function(error, response, body) {
                                 if (body) res.send(body);
-                        });
+                        }).write(buf);
                 });
 	        }
         })(url));
