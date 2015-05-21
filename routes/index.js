@@ -26,7 +26,7 @@ for (var name in configs.platforms) {
                 });
             }
         })(url));
-        router.post('/' + theRoute, function(url) {
+        router.post('/' + theRoute, (function(url) {
         	return function(req, res) {
                 var search = "?signature=" + req.query["signature"]
                         + "&timestamp=" + req.query["timestamp"]
@@ -45,7 +45,7 @@ for (var name in configs.platforms) {
                         });
                 });
 	        }
-        });
+        })(url));
 }
 
 module.exports = router;
