@@ -12,16 +12,20 @@ router.get('/', function(req, res) {
 });
 
 for (var name in configs.platforms) {
-	var search = "?signature=" + req["signature"]
-		+ "&timestamp=" + req["timestamp"]
-		+ "&nonce=" + req["nonce"]
-		+ req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
 	router.get('/' + name, function(req, res) {
+		var search = "?signature=" + req["signature"]
+			+ "&timestamp=" + req["timestamp"]
+			+ "&nonce=" + req["nonce"]
+			+ req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
 		request.get(configs.platforms[name], function(error, response, body) {
 			res.send(body);
 		});
 	});
 	router.post('/' + name, function(req, res) {
+		var search = "?signature=" + req["signature"]
+			+ "&timestamp=" + req["timestamp"]
+			+ "&nonce=" + req["nonce"]
+			+ req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
 		getBody(req, {
 			limit: '100kb',
 			length: req.headers['content-length'],
