@@ -12,16 +12,17 @@ router.get('/', function(req, res) {
 });
 
 for (var name in configs.platforms) {
-	router.get('/' + name, function(req, res) {
+	var theRoute = "" + name;
+	router.get('/' + theRoute, function(req, res) {
 		var search = "?signature=" + req["signature"]
 			+ "&timestamp=" + req["timestamp"]
 			+ "&nonce=" + req["nonce"]
 			+ req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
-		request.get(configs.platforms[name], function(error, response, body) {
+		request.get(configs.platforms[theRoute], function(error, response, body) {
 			res.send(body);
 		});
 	});
-	router.post('/' + name, function(req, res) {
+	router.post('/' + theRoute, function(req, res) {
 		var search = "?signature=" + req["signature"]
 			+ "&timestamp=" + req["timestamp"]
 			+ "&nonce=" + req["nonce"]
@@ -32,7 +33,7 @@ for (var name in configs.platforms) {
 			encoding: 'utf8'
 		}, function(err, buf) {
 			request.post({
-				url: configs.platforms[name],
+				url: configs.platforms[theRoute],
 				formData: buf
 			}, function(error, response, body) {
 				if (body) res.send(body);
