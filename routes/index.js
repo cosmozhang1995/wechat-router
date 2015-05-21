@@ -16,21 +16,22 @@ for (var name in configs.platforms) {
         var url = configs.platforms[theRoute];
         router.get('/' + theRoute, (function(url) {
             return function(req, res) {
-                var search = "?signature=" + req["signature"]
-                        + "&timestamp=" + req["timestamp"]
-                        + "&nonce=" + req["nonce"]
-                        + req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
+                var search = "?signature=" + req.query["signature"]
+                        + "&timestamp=" + req.query["timestamp"]
+                        + "&nonce=" + req.query["nonce"]
+                        + (req.query["echostr"] ? ("&echostr=" + req.query["echostr"]) : "");
                 request.get(url + search, function(error, response, body) {
-                        res.send(body);
+                	console.log(url+search);
+                    res.send(body);
                 });
             }
         })(url));
         router.post('/' + theRoute, function(url) {
         	return function(req, res) {
-                var search = "?signature=" + req["signature"]
-                        + "&timestamp=" + req["timestamp"]
-                        + "&nonce=" + req["nonce"]
-                        + req["echostr"] ? ("&echostr=" + req["echostr"]) : "";
+                var search = "?signature=" + req.query["signature"]
+                        + "&timestamp=" + req.query["timestamp"]
+                        + "&nonce=" + req.query["nonce"]
+                        + (req.query["echostr"] ? ("&echostr=" + req.query["echostr"]) : "");
                 getBody(req, {
                         limit: '100kb',
                         length: req.headers['content-length'],
